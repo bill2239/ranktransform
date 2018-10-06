@@ -43,7 +43,7 @@ def census_transform(img_path,windowsize):
             #MxN
             for j in xrange(y - hy/2, y + hy/2 + 1):
                 for i in xrange(x - wx/2, x + wx/2 + 1):
-                    count>>1
+                    count<<=1
                     if image[j][i] > image[y][x]:
                         count=count | 1
                     else:
@@ -52,19 +52,19 @@ def census_transform(img_path,windowsize):
     rt= image[1:height-1,1:width-1] #offet by 1
     #optional -- scale to unsigned 8 bit for visualization 
     minVal=0
-    maxVal= 2 ** (windowsize*windowsize-1)
+    maxVal= 2 ** (windowsize*windowsize-1)  # maxc
     rt = 255.0 * ( rt - minVal ) / (maxVal - minVal - 1.0)  
     return rt
 
-#transform_type= "census"
+#ex: transform_type= "census" or "rank"
 transform_type= sys.argv[3]
 
 if transform_type == "rank":
     rt= rank_transform(sys.argv[1],3)
 else:
     rt=rank_transform(sys.argv[1],3)
-cv2.imshow("rank", rt)
-cv2.waitKey(0)
+#cv2.imshow("rank", rt)
+#cv2.waitKey(0)
 
 filename = sys.argv[2]
 cv2.imwrite(filename, rt)
